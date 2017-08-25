@@ -1,0 +1,36 @@
+{
+  "name": "dat-download",
+  "description": "download a file or directory from a dat",
+  "version": "1.0.0",
+  "author": "Joe Hand <joe@hand.email>",
+  "bugs": {
+    "url": "https://github.com/joehand/dat-download/issues"
+  },
+  "devDependencies": {
+    "standard": "*",
+    "tap-spec": "^4.0.2",
+    "tape": "^4.0.0",
+    "temporary-directory": "^1.0.2"
+  },
+  "homepage": "https://github.com/joehand/dat-download",
+  "keywords": [
+    "dat",
+    "hyperdrive"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joehand/dat-download.git"
+  },
+  "scripts": {
+    "test": "standard && tape test/*.js | tap-spec"
+  },
+  "dependencies": {
+    "dat-node": "^3.5.1",
+    "debug": "^3.0.1",
+    "mirror-folder": "^2.1.1",
+    "pump": "^1.0.2",
+    "random-access-memory": "^2.4.0"
+  }
+}
