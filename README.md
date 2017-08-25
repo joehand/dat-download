@@ -28,6 +28,17 @@ datDownload('dat://beakerbrowser.com/index.html', process.cwd(), function (err) 
 })
 ```
 
+Can also download a whole dat:
+
+```js
+var datDownload = require('dat-download')
+
+datDownload('dat://beakerbrowser.com/', process.cwd(), function (err) {
+    if (err) throw err
+    console.log('done downloading! thanks')
+})
+```
+
 ## Install
 
 ```
