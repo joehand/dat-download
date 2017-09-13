@@ -19,7 +19,7 @@ module.exports = function (datPath, downloadDest, cb) {
   if (datPath.indexOf('//') > -1) datPath = datPath.split('//')[1]
   var key = 'dat://' + datPath.split('/')[0]
   var entryPath = '/' + datPath.split('/').slice(1).join('/')
-  if (entryPath === '/') downloadDest = path.join(downloadDest, datPath.split('/')[0])
+  // if (entryPath === '/') downloadDest = path.join(downloadDest, datPath.split('/')[0])
   debug('downloadDir', downloadDest)
   debug('dat key', key)
   debug('dat path', entryPath)
@@ -46,14 +46,20 @@ module.exports = function (datPath, downloadDest, cb) {
     function downloadDir (dirname, cb) {
       debug('downloading dir', dirname)
       var dest = path.join(downloadDest, dirname)
-      fs.stat(dest, function (_, stat) {
-        // throw if dest exists
-        if (stat && stat.isDirectory()) return cb(new Error('Destination path exists:' + dest))
-        mkdirp(dest, function (err) {
-          if (err) return cb(err)
-          mirror({fs: archive, name: dirname}, dest, cb)
-        })
+      mkdirp(dest, function (err) {
+        if (err) return cb(err)
+        mirror({fs: archive, name: dirname}, dest, {equals: equals}, cb)
       })
+
+      function equals (src, dst, cb) {
+        console.log('src.name, dst.name', src.name, dst.name)
+        console.log('dir', src.stat.isDirectory(), dst.stat.isDirectory())
+        if (src.stat.isDirectory()) return cb(null, true)
+        console.log('not directory')
+        if (src.stat.size !== dst.stat.size) return cb(null, false)
+        if (src.stat.mtime.getTime() > dst.stat.mtime.getTime()) return cb(null, false)
+        cb(null, true)
+      }
     }
 
     function downloadFile (file, cb) {
