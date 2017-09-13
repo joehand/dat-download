@@ -15,8 +15,7 @@ test('Download full dat', function (t) {
   tmp(function (_, dir, cleanup) {
     downloadDat(testdats.fullDat, dir, function (err) {
       t.error(err, 'no error')
-      var key = testdats.fullDat.split('//')[1]
-      fs.stat(path.join(dir, key), function (err, stat) {
+      fs.stat(dir, function (err, stat) {
         t.error(err, 'no error')
         t.ok(stat.isDirectory(), 'directory exists')
         cleanup(function () {
@@ -31,8 +30,7 @@ test('Download full dat 2', function (t) {
   tmp(function (_, dir, cleanup) {
     downloadDat(testdats.fullDat2, dir, function (err) {
       t.error(err, 'no error')
-      var key = testdats.fullDat.split('//')[1]
-      fs.stat(path.join(dir, key), function (err, stat) {
+      fs.stat(dir, function (err, stat) {
         t.error(err, 'no error')
         t.ok(stat.isDirectory(), 'directory exists')
         cleanup(function () {

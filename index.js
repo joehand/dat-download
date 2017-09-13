@@ -19,7 +19,7 @@ module.exports = function (datPath, downloadDest, cb) {
   if (datPath.indexOf('//') > -1) datPath = datPath.split('//')[1]
   var key = 'dat://' + datPath.split('/')[0]
   var entryPath = '/' + datPath.split('/').slice(1).join('/')
-  if (entryPath === '/') downloadDest = path.join(downloadDest, datPath.split('/')[0])
+  // if (entryPath === '/') downloadDest = path.join(downloadDest, datPath.split('/')[0])
   debug('downloadDir', downloadDest)
   debug('dat key', key)
   debug('dat path', entryPath)
