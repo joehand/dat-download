@@ -48,8 +48,18 @@ module.exports = function (datPath, downloadDest, cb) {
       var dest = path.join(downloadDest, dirname)
       mkdirp(dest, function (err) {
         if (err) return cb(err)
-        mirror({fs: archive, name: dirname}, dest, cb)
+        mirror({fs: archive, name: dirname}, dest, {equals: equals}, cb)
       })
+
+      function equals (src, dst, cb) {
+        console.log('src.name, dst.name', src.name, dst.name)
+        console.log('dir', src.stat.isDirectory(), dst.stat.isDirectory())
+        if (src.stat.isDirectory()) return cb(null, true)
+        console.log('not directory')
+        if (src.stat.size !== dst.stat.size) return cb(null, false)
+        if (src.stat.mtime.getTime() > dst.stat.mtime.getTime()) return cb(null, false)
+        cb(null, true)
+      }
     }
 
     function downloadFile (file, cb) {

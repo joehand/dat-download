@@ -26,10 +26,13 @@ test('Download full dat', function (t) {
   })
 })
 
-test('Download full dat 2', function (t) {
+test.only('Download full dat 2', function (t) {
   tmp(function (_, dir, cleanup) {
+    // write an existing file into dest
+    fs.writeFileSync(dir + '/extra.txt', 'extra')
     downloadDat(testdats.fullDat2, dir, function (err) {
       t.error(err, 'no error')
+      t.strictEqual(fs.readFileSync(dir + '/extra.txt', 'utf8'), 'extra', 'does not remove extra file')
       fs.stat(dir, function (err, stat) {
         t.error(err, 'no error')
         t.ok(stat.isDirectory(), 'directory exists')
