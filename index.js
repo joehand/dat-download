@@ -46,13 +46,9 @@ module.exports = function (datPath, downloadDest, cb) {
     function downloadDir (dirname, cb) {
       debug('downloading dir', dirname)
       var dest = path.join(downloadDest, dirname)
-      fs.stat(dest, function (_, stat) {
-        // throw if dest exists
-        if (stat && stat.isDirectory()) return cb(new Error('Destination path exists:' + dest))
-        mkdirp(dest, function (err) {
-          if (err) return cb(err)
-          mirror({fs: archive, name: dirname}, dest, cb)
-        })
+      mkdirp(dest, function (err) {
+        if (err) return cb(err)
+        mirror({fs: archive, name: dirname}, dest, cb)
       })
     }
 
