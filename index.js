@@ -6,6 +6,7 @@ var mirror = require('mirror-folder')
 var pump = require('pump')
 var ram = require('random-access-memory')
 var mkdirp = require('mkdirp')
+var match = require('anymatch')
 var debug = require('debug')('dat-download')
 
 module.exports = function (datPath, downloadDest, cb) {
@@ -42,9 +43,29 @@ module.exports = function (datPath, downloadDest, cb) {
     function download (entryPath, cb) {
       debug('download', entryPath)
       archive.stat(entryPath, function (err, stat) {
-        if (err) return cb(err)
-        if (stat.isDirectory()) downloadDir(entryPath, cb)
-        if (stat.isFile()) downloadFile(entryPath, cb)
+        // if (err) return cb(err)
+        // TODO: check if path actually is glob? or if different error
+        if (err) downloadGlob(entryPath, cb)
+        else if (err || stat.isDirectory()) downloadDir(entryPath, cb)
+        else if (stat.isFile()) downloadFile(entryPath, cb)
+      })
+    }
+
+
+    function downloadGlob (glob, cb) {
+      debug('downloading glob', glob)
+      var dest = downloadDest
+      fs.stat(dest, function (_, stat) {
+        // throw if dest exists?
+        // if (stat && stat.isDirectory()) return cb(new Error('Destination path exists:' + dest))
+        mirror({fs: archive, name: '/'}, dest, {
+          ignore: function (file) {
+            if (file.indexOf(dest) > -1) return // ignore local paths
+            debug('ignore', file, match(glob, file))
+            if (match(glob, file)) return false
+            return true
+          }
+        }, cb)
       })
     }
 

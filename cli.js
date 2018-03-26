@@ -20,6 +20,7 @@ if (!argv._.length || argv.help) return usage()
 datDownload(key, dest, function (err) {
   if (err) throw err
   console.log('done downloading! thanks')
+  process.exit(0)
 })
 
 function usage () {
