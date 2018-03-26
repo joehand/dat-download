@@ -24,18 +24,23 @@ module.exports = function (datPath, downloadDest, cb) {
   debug('dat key', key)
   debug('dat path', entryPath)
 
+  mkdirp.sync(downloadDest)
   Dat(ram, {key: key, sparse: true}, function (err, dat) {
     if (err) return cb(err)
     var archive = dat.archive
-    dat.joinNetwork()
-    archive.metadata.update(function () {
+    var network = dat.joinNetwork()
+    network.once('connection', function () {
+      // TODO: can have weird behavior if dont have metadata
+      // previously was:
+      //    archive.metadata.update(download)
       download(entryPath, function (err) {
         if (err) return cb(err)
-        dat.close(cb)
+        cb()
       })
     })
 
     function download (entryPath, cb) {
+      debug('download', entryPath)
       archive.stat(entryPath, function (err, stat) {
         if (err) return cb(err)
         if (stat.isDirectory()) downloadDir(entryPath, cb)
@@ -51,20 +56,17 @@ module.exports = function (datPath, downloadDest, cb) {
         if (stat && stat.isDirectory()) return cb(new Error('Destination path exists:' + dest))
         mkdirp(dest, function (err) {
           if (err) return cb(err)
-          mirror({fs: archive, name: dirname}, dest, cb)
+          mirror({fs: archive, name: '/' + dirname}, dest, cb)
         })
       })
     }
 
     function downloadFile (file, cb) {
-      mkdirp(downloadDest, function (err) {
-        if (err) return cb(err)
-        var dest = path.join(downloadDest, file)
-        debug('downloading file', file, 'to', dest)
-        var rs = archive.createReadStream(file)
-        var ws = fs.createWriteStream(path.join(downloadDest, file))
-        pump(rs, ws, cb)
-      })
+      var dest = path.join(downloadDest, file)
+      debug('downloading file', file, 'to', dest)
+      var rs = archive.createReadStream('/' + file)
+      var ws = fs.createWriteStream(path.join(downloadDest, file))
+      pump(rs, ws, cb)
     }
   })
 }
