@@ -14,7 +14,7 @@ module.exports = (datPath, downloadDest = process.cwd(), { overwrite = true } = 
   if (datPath.indexOf('//') > -1) datPath = datPath.split('//')[1]
   const key = 'dat://' + datPath.split('/')[0]
   const entryPath = '/' + datPath.split('/').slice(1).join('/')
-  if (entryPath === '/') downloadDest = path.join(downloadDest, datPath.split('/')[0])
+  // if (entryPath === '/') downloadDest = path.join(downloadDest, ?datPath.split('/')[0])
   debug('downloadDir', downloadDest)
   debug('dat key', key)
   debug('dat path', entryPath)
@@ -49,9 +49,9 @@ module.exports = (datPath, downloadDest = process.cwd(), { overwrite = true } = 
     }
 
     function downloadDir (dirname) {
-      debug('downloading dir', dirname)
       return new Promise((resolve, reject) => {
         var dest = path.join(downloadDest, dirname)
+        debug('downloading dir', dirname, 'to', dest)
         fs.stat(dest, function (_, stat) {
           // throw if dest exists
           if (overwrite === false) if (stat && stat.isDirectory()) return reject(new Error('Destination path exists:' + dest))
