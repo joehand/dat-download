@@ -52,13 +52,17 @@ npm install dat-download
 * `datPath` - dat key with subdirectory or file path. If the whole key is specified, it will download to `destination/key`.
 * `destination` - download folder
 
-## License
-
-[MIT](LICENSE.md)
-
 [npm-image]: https://img.shields.io/npm/v/dat-download.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/dat-download
 [travis-image]: https://img.shields.io/travis/joehand/dat-download.svg?style=flat-square
 [travis-url]: https://travis-ci.org/joehand/dat-download
 [standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
 [standard-url]: http://npm.im/standard
+
+## Licensing
+
+This package is free to use for commercial purposes for a trial period under the terms of the [Prosperity Public License](./LICENSE).
+
+Licenses for long-term commercial use are available via [licensezero.com](https://licensezero.com).
+
+[![licensezero.com pricing](https://licensezero.com/projects/67986d53-c480-4633-8cdf-e4d0d9ae61c6/badge.svg)](https://licensezero.com/projects/67986d53-c480-4633-8cdf-e4d0d9ae61c6)
