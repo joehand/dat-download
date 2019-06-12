@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "licensezero": [
+    {
+      "agentSignature": "cc0191210ac1b407f3de9aa5f70b6172bb56f59875c70c8397dfcd184ee9eac5222d363fcaeda17bb7560b872d827e9069b57e4c2a1fb31a0d91c85958544805",
+      "license": {
+        "homepage": "https://github.com/joehand/dat-download",
+        "jurisdiction": "US-OR",
+        "name": "Joe Hand",
+        "projectID": "67986d53-c480-4633-8cdf-e4d0d9ae61c6",
+        "publicKey": "6810272b33887f67277e394fae831ebe67a93e253b131b2d654b3ae9ecd0a0ed",
+        "terms": "prosperity",
+        "version": "2.0.0"
+      },
+      "licensorSignature": "c2a9a88df9c71886c2ad42354de812b0ee4744b617da6cbceee0e0c7085f0005fd8f2db4b37cd6c236b6067a644d9d0bc3fc8de637ffada1b79d4d839e41a603"
+    }
+  ]
+}

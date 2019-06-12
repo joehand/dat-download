@@ -11,10 +11,9 @@ One-time file downloads via Dat. Download a single file or subdirectory from a d
 ```js
 var datDownload = require('dat-download')
 
-datDownload('dat://778f8d955175c92e4ced5e4f5563f69bfec0c86cc6f670352c457943666fe639/dat.json', process.cwd(), function (err) {
-    if (err) throw err
-    console.log('done downloading! thanks')
-})
+await datDownload('dat://778f8d955175c92e4ced5e4f5563f69bfec0c86cc6f670352c457943666fe639/dat.json', process.cwd())
+
+console.log('done downloading! thanks')
 ```
 
 Works with DNS-type dat keys too!
@@ -22,10 +21,7 @@ Works with DNS-type dat keys too!
 ```js
 var datDownload = require('dat-download')
 
-datDownload('dat://beakerbrowser.com/index.html', process.cwd(), function (err) {
-    if (err) throw err
-    console.log('done downloading! thanks')
-})
+await datDownload('dat://beakerbrowser.com/index.html', process.cwd())
 ```
 
 Can also download a whole dat:
@@ -33,10 +29,7 @@ Can also download a whole dat:
 ```js
 var datDownload = require('dat-download')
 
-datDownload('dat://beakerbrowser.com/', process.cwd(), function (err) {
-    if (err) throw err
-    console.log('done downloading! thanks')
-})
+await datDownload('dat://beakerbrowser.com/', process.cwd())
 ```
 
 ## Install
@@ -47,7 +40,7 @@ npm install dat-download
 
 ## API
 
-### `datDownload(datPath, [destination], callback)`
+### `await datDownload(datPath, [destination])`
 
 * `datPath` - dat key with subdirectory or file path. If the whole key is specified, it will download to `destination/key`.
 * `destination` - download folder
