@@ -7,11 +7,10 @@
     "url": "https://github.com/joehand/dat-download/issues"
   },
   "devDependencies": {
-    "dependency-check": "^2.9.1",
-    "install": "^0.10.1",
-    "standard": "*",
-    "tap-spec": "^4.0.2",
-    "tape": "^4.0.0",
+    "dependency-check": "^3.3.0",
+    "standard": "^12.0.1",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.10.2",
     "temporary-directory": "^1.0.2"
   },
   "homepage": "https://github.com/joehand/dat-download",
@@ -29,11 +28,11 @@
     "test": "standard && dependency-check ./package.json && tape test/*.js | tap-spec"
   },
   "dependencies": {
-    "dat-node": "^3.5.1",
-    "debug": "^3.0.1",
-    "mirror-folder": "^2.1.1",
+    "dat-node": "github:datproject/dat-node#async",
+    "debug": "^4.1.1",
+    "mirror-folder": "^3.0.0",
     "mkdirp": "^0.5.1",
-    "pump": "^1.0.2",
-    "random-access-memory": "^2.4.0"
+    "pump": "^3.0.0",
+    "random-access-memory": "^3.1.1"
   }
 }
