@@ -1,23 +1,27 @@
-var fs = require('fs')
-var path = require('path')
-var test = require('tape')
-var tmp = require('temporary-directory')
-var downloadDat = require('..')
+const fs = require('fs')
+const path = require('path')
+const test = require('tape')
+const tmp = require('temporary-directory')
+const downloadDat = require('..')
 
-var testdats = {
+const createDat = require('./helper')
+
+const testdats = {
   fullDat: 'dat://60c525b5589a5099aa3610a8ee550dcd454c3e118f7ac93b7d41b6b850272330/',
   file: 'dat://60c525b5589a5099aa3610a8ee550dcd454c3e118f7ac93b7d41b6b850272330/dat.json',
   subdir: 'dat://60c525b5589a5099aa3610a8ee550dcd454c3e118f7ac93b7d41b6b850272330/public/imgs/'
 }
 
-test('Download full dat', function (t) {
+test('Download dat', async function (t) {
   tmp(async function (_, dir, cleanup) {
-    await downloadDat(testdats.fullDat, dir)
-    var key = testdats.fullDat.split('//')[1]
-    fs.stat(path.join(dir, key), function (err, stat) {
+    const dat = await createDat()
+    await downloadDat(dat.key.toString('hex'), dir)
+    fs.stat(dir, function (err, stat) {
       t.error(err, 'no error')
+      t.ok(stat)
       t.ok(stat.isDirectory(), 'directory exists')
-      cleanup(function () {
+      cleanup(async function () {
+        await dat.close()
         t.end()
       })
     })
